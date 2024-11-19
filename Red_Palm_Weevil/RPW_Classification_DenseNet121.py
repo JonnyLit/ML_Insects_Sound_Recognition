@@ -47,8 +47,8 @@ import matplotlib.pyplot as plt
 
 ##############################################################
 
-# current_model = DenseNet121
-current_model = ResNet50
+current_model = DenseNet121
+#current_model = ResNet50
 
 model_name = 'TreeVibes_' + current_model.__name__
 
