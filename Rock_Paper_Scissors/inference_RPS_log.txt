@@ -82,8 +82,8 @@ PreprocessImage
 12
     Process the output
 Predicted class: 0 --> paper
-Elapsed inference time: 1242 milliseconds
-Elapsed overall time: 1754 milliseconds
+Elapsed inference time: 569 milliseconds
+Elapsed overall time: 610 milliseconds
 
 
 
