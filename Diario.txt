@@ -54,3 +54,35 @@ Il codice ha passato con successo il dataflow (ovvero si è riusciti a giungere 
 I risultati di classificazione sono però errati, poichè il preprocessing non è stato eseguito correttamente,
 ovvero gli spettrogrammi non corrispondono agli analoghi spettrogrammi ottenuti dal preprocessing in fase di training con python.
 Occorre quindi aggiustare l'algoritmo di preprocessing, sino ad ottenere degli spettrogrammi uguali a quelli ottenuti con python.
+
+===============================================================================================================
+===============================================================================================================
+19 Dic 2024
+
+-E' stato scritto il codice C++ (vedi inference_RPW_spectrogram_binaries2.cpp) da far funzionare su RaspberryPy-3B (compatibile anche con 4) per effettuare 
+l'inference degli spettrogrammi degli audio dei punteruoli rossi. Il codice C++ non si occuperà quindi del preprocessing dei file audio, 
+ma userà direttamente gli spettrogrammi ottenuti con la libreria librosa di python su RaspberryPy (stesso algoritmo di preprocessing usato in fase 
+di training della rete stessa).
+Questa scelta è dovuta al fatto che le librerie usato in python non sono facilmente replicabili in C++ (e non ve ne sono di già utilizzabili),
+ed in ogni caso risulta inizialmente inutile e scomodo scriverne ad hoc, dato che l'algoritmo di preprocessing è ancora in fase di cambiamenti.
+
+-Il codice C++ di inference funziona correttamente, e in breve si occupa di prendere in ingresso tutti gli spettrogrammi in formato binario da una
+cartella, e restituire il risultato delle classificazioni su file di testo.
+
+-E' stata poi progettata una rete MQTT in python (vedi file Rete_MQTT.pdf e Riassunto_Funzionamento_Rete_MQTT.pdf) per:
+	-gestire l'iscrizione degli ESP32 alla rete di sensori,
+	-notificare il RaspberryPy quando un audio è disponibile,
+	-notificare il RaspberryPy di eventuali problemi nella registrazione audio,
+	-abilitare/disabilitare un ESP32 alla registrazione audio,
+	-mandare in sleep_mode (o risvegliare) un ESP32 quando desiderato,
+	-richiedere informazioni agli ESP32 quando desiderato,
+	-disconnettere dal broker MQTT un ESP32 (cioè cancellarlo dalla rete di sensori),
+	-resettare un dispositivo ESP32 quando desiderato o quando ci sono problemi,
+	-impostare la frequenza di registrazione degli audio (intervallo tra due registrazioni consecutive).
+
+Inizialmente tale rete viene scritta e testata in python, così da poter ovviare al problema della simulazione per molti ESP32 (infatti uno script
+in python potrà simulare un ESP32, così da poter avviare più script assieme e poter simulare e debuggare correttamente la rete prima della scrittura
+finale del codice per ESP32 stesso).
+
+-Quindi in generale per ora sono in fase di conclusione i codici python per la simulazione degli ESP32 (vedi ESP32_client_MQTT_simulator.py) 
+e del server che verrà effettivamente utilizzato su RaspberryPy (vedi AudioPreprocessing_Server.py).
