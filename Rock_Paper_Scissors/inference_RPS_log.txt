@@ -1,0 +1,1422 @@
+For this inference, the acceleration provided by 
+the Armnn libraries (CpuAcc flag enabled during execution)
+is about 13X, that is 600ms with CpuAcc instead of 8s with CpuRef (without acceleration)
+
+
+LIST OF THE EXECUTED COMMANDS:
+
+pi@pi:~ $ cd /home/pi/aarch64_build_ref-neon
+pi@pi:~/aarch64_build_ref-neon $ g++ inference_RPS.cpp -o inference_RPS_exe  -I/home/pi/aarch64_build_ref-neon/include  -I/usr/include/opencv4   -L/home/pi/aarch64_build_ref-neon/     -larmnn     -larmnnTfLiteParser     -lpthread -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -lm
+pi@pi:~/aarch64_build_ref-neon $ export LD_LIBRARY_PATH=/home/pi/aarch64_build_ref-neon:$LD_LIBRARY_PATH
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper1.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper2.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper3.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper4.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper5.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper6.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper7.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper8.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper9.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper10.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper11.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock1.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock2.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock3.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock4.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock5.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock6.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock7.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock8.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock9.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock10.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock11.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors1.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors2.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors3.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors4.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors5.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors6.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors7.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors8.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors9.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors10.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors11.jpg CpuAcc >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper1.jpg CpuRef >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock1.jpg CpuRef >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+pi@pi:~/aarch64_build_ref-neon $ ./inference_RPS_exe RPS_tf_lite_model.tflite /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors1.jpg CpuRef >> /home/pi/aarch64_build_ref-neon/inference_RPS_log.txt
+
+
+
+RESULTS OF THE EXECUTED COMMANDS:
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper1.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 0 --> paper
+Elapsed inference time: 569 milliseconds
+Elapsed overall time: 610 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper2.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 0 --> paper
+Elapsed inference time: 573 milliseconds
+Elapsed overall time: 590 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper3.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 2 --> scissors
+Elapsed inference time: 590 milliseconds
+Elapsed overall time: 608 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper4.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 0 --> paper
+Elapsed inference time: 609 milliseconds
+Elapsed overall time: 626 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper5.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 2 --> scissors
+Elapsed inference time: 600 milliseconds
+Elapsed overall time: 617 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper6.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 0 --> paper
+Elapsed inference time: 603 milliseconds
+Elapsed overall time: 620 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper7.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 0 --> paper
+Elapsed inference time: 588 milliseconds
+Elapsed overall time: 605 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper8.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 0 --> paper
+Elapsed inference time: 562 milliseconds
+Elapsed overall time: 579 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper9.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 2 --> scissors
+Elapsed inference time: 565 milliseconds
+Elapsed overall time: 582 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper10.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 0 --> paper
+Elapsed inference time: 676 milliseconds
+Elapsed overall time: 713 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper11.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 0 --> paper
+Elapsed inference time: 568 milliseconds
+Elapsed overall time: 605 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock1.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 1 --> rock
+Elapsed inference time: 593 milliseconds
+Elapsed overall time: 616 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock2.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 1 --> rock
+Elapsed inference time: 575 milliseconds
+Elapsed overall time: 592 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock3.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 1 --> rock
+Elapsed inference time: 592 milliseconds
+Elapsed overall time: 610 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock4.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 1 --> rock
+Elapsed inference time: 573 milliseconds
+Elapsed overall time: 590 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock5.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 1 --> rock
+Elapsed inference time: 572 milliseconds
+Elapsed overall time: 589 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock6.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 1 --> rock
+Elapsed inference time: 593 milliseconds
+Elapsed overall time: 610 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock7.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 1 --> rock
+Elapsed inference time: 620 milliseconds
+Elapsed overall time: 662 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock8.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 1 --> rock
+Elapsed inference time: 586 milliseconds
+Elapsed overall time: 602 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock9.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 1 --> rock
+Elapsed inference time: 597 milliseconds
+Elapsed overall time: 614 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock10.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 1 --> rock
+Elapsed inference time: 618 milliseconds
+Elapsed overall time: 665 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock11.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 1 --> rock
+Elapsed inference time: 597 milliseconds
+Elapsed overall time: 634 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors1.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 2 --> scissors
+Elapsed inference time: 591 milliseconds
+Elapsed overall time: 610 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors2.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 2 --> scissors
+Elapsed inference time: 645 milliseconds
+Elapsed overall time: 663 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors3.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 2 --> scissors
+Elapsed inference time: 591 milliseconds
+Elapsed overall time: 608 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors4.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 2 --> scissors
+Elapsed inference time: 623 milliseconds
+Elapsed overall time: 639 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors5.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 2 --> scissors
+Elapsed inference time: 574 milliseconds
+Elapsed overall time: 591 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors6.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 2 --> scissors
+Elapsed inference time: 569 milliseconds
+Elapsed overall time: 586 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors7.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 2 --> scissors
+Elapsed inference time: 621 milliseconds
+Elapsed overall time: 638 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors8.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 2 --> scissors
+Elapsed inference time: 552 milliseconds
+Elapsed overall time: 569 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors9.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 2 --> scissors
+Elapsed inference time: 614 milliseconds
+Elapsed overall time: 630 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors10.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 2 --> scissors
+Elapsed inference time: 567 milliseconds
+Elapsed overall time: 605 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors11.jpg  backendType: CpuAcc
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 2 --> scissors
+Elapsed inference time: 582 milliseconds
+Elapsed overall time: 620 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper1_png.rf.6771d0803db4a4cb6e5e96339f785b9d.jpg  backendType: CpuRef
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/paper/paper1.jpg  backendType: CpuRef
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 0 --> paper
+Elapsed inference time: 7922 milliseconds
+Elapsed overall time: 7938 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/rock/rock1.jpg  backendType: CpuRef
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 1 --> rock
+Elapsed inference time: 7939 milliseconds
+Elapsed overall time: 7955 milliseconds
+
+
+
+-----------------------inference_RPS_exe-------------------------
+Input arguments: 
+modelPath: RPS_tf_lite_model.tflite  imagePath: /home/pi/aarch64_build_ref-neon/test_RPS/scissors/scissors1.jpg  backendType: CpuRef
+RunInference>
+    Read the TFLite model file
+    Create the network from the binary data
+    InputBindingName[0] = conv2d_input
+    OutputBindingName[0] = Identity
+    numSubgraph = 1
+    iter_subgraphs = 0
+    InputBindingName = conv2d_input
+    OutputBindingName = Identity
+    Preprocess the input image
+PreprocessImage
+    Resize the image to 150x150 to match the model's input requirements
+    Flatten the image to a vector
+    Ensure input data is correct
+    Create TensorInfo for input, ensuring it's a constant tensor
+    Create ConstTensor with the correct TensorInfo
+    Create InputTensors
+    Allocate memory for output tensor data (3 classes)
+    Create OutputTensors
+    Optimize the network
+    Load the optimized network
+    Perform inference
+1
+0
+270000
+1
+0
+12
+    Process the output
+Predicted class: 2 --> scissors
+Elapsed inference time: 7987 milliseconds
+Elapsed overall time: 8002 milliseconds

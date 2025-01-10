@@ -1,0 +1,88 @@
+===============================================================================================================
+===============================================================================================================
+20 Nov 2024
+
+-Prima di provare a fare il codice di inference su Raspberry pi riguardo il riconoscimento audio del punteruolo rosso,
+ho provato a farne uno per il riconoscimento della forma delle mani riguardo il gioco carta-forbice-sasso. 
+Questo per avere risultati più velocemente riguardo il funzionamento delle librerie ArmNN, 
+dato che comunque anche per il riconoscimento audio bisognerà fare riconoscimento di 
+immagini (gli audio devono essere preprocessati per farli diventare immagini di spettrogrammi 
+da fornire in ingresso alla rete neurale).
+Il codice per riconoscimento immagini di carta-forbice-sasso ha funzionato, 
+ed è stato provato con le 33 immagini di test facenti parte del dataset associato, 
+ma non usate per il training (come teoria vuole per verificarne 
+la capacità di generalizzare con immagini mai viste del modello).
+
+I risultati di tale test sono riportati su questa repository di Github nel file:
+	Rock_Paper_Scissors/inference_RPS_log.txt
+	
+in cui ogni test è spaziato dagli altri, iniziando con:
+
+	-----------------------inference_RPS_exe-------------------------
+	modelPath imagePath backendType
+	
+e finendo con il risultato di classificazione:
+	paper (0), rock(1), scissors(2)
+	
+ed i tempi di inference e totale.
+
+Gli input usati sono quelli riportato all'inizio del test:
+	-modelPath: path del modello di formato .tflite che descrive l'architettura e i pesi del modello neurale
+	-imagePath: immagine da testare a cui poi associare un risultato tra paper (0), rock(1) e scissors(2)
+	-backendType: flag che può essere 'CpuRef' per non accelerare l'inference, e 'CpuAcc' per accelerarla sfruttando ArmNN
+	
+Il test è stato fatto con 33 immagini, di cui:
+	-11 immagini di paper --> 8/11 test superati
+	-11 immagini di rock --> 11/11 test superati
+	-11 immagini di scissors --> 11/11 test superati
+
+Tutti i test sono stati superati eccetto che per tre immagini di paper, le quali sono state confuse per scissors.
+Questo risultato è comunque giustificabile dal fatto che la rete neurale non avesse precisione assoluta, e dal fatto che
+una mano in forma a forbice ha alcune delle dita visibili, risultando simile ad una mano aperta (carta).
+
+Riguardo i tempi ottenuti, si registra un'accelerazione circa pari a 13X usando il flag 'CpuAcc' rispetto a 'CpuRef' 
+che non sfrutta l'accelerazione dovuta all'uso delle librerie ArmNN:
+	
+	tempi usando CpuAcc --> circa 600ms
+	tempi usando CpuRef --> circa 8s
+	
+
+E' stato poi provato il codice di inference riguardo il riconoscimento audio del punteruolo rosso,
+sfruttando il codice funzionante usato per carta-forbice-sasso riguardo l'inference delle immagini degli spettrogrammi ottenute dal
+preprocessing dei file audio.
+Il codice ha passato con successo il dataflow (ovvero si è riusciti a giungere ad un risultato).
+I risultati di classificazione sono però errati, poichè il preprocessing non è stato eseguito correttamente,
+ovvero gli spettrogrammi non corrispondono agli analoghi spettrogrammi ottenuti dal preprocessing in fase di training con python.
+Occorre quindi aggiustare l'algoritmo di preprocessing, sino ad ottenere degli spettrogrammi uguali a quelli ottenuti con python.
+
+===============================================================================================================
+===============================================================================================================
+19 Dic 2024
+
+-E' stato scritto il codice C++ (vedi inference_RPW_spectrogram_binaries2.cpp) da far funzionare su RaspberryPy-3B (compatibile anche con 4) per effettuare 
+l'inference degli spettrogrammi degli audio dei punteruoli rossi. Il codice C++ non si occuperà quindi del preprocessing dei file audio, 
+ma userà direttamente gli spettrogrammi ottenuti con la libreria librosa di python su RaspberryPy (stesso algoritmo di preprocessing usato in fase 
+di training della rete stessa).
+Questa scelta è dovuta al fatto che le librerie usato in python non sono facilmente replicabili in C++ (e non ve ne sono di già utilizzabili),
+ed in ogni caso risulta inizialmente inutile e scomodo scriverne ad hoc, dato che l'algoritmo di preprocessing è ancora in fase di cambiamenti.
+
+-Il codice C++ di inference funziona correttamente, e in breve si occupa di prendere in ingresso tutti gli spettrogrammi in formato binario da una
+cartella, e restituire il risultato delle classificazioni su file di testo.
+
+-E' stata poi progettata una rete MQTT in python (vedi file Rete_MQTT.pdf e Riassunto_Funzionamento_Rete_MQTT.pdf) per:
+	-gestire l'iscrizione degli ESP32 alla rete di sensori,
+	-notificare il RaspberryPy quando un audio è disponibile,
+	-notificare il RaspberryPy di eventuali problemi nella registrazione audio,
+	-abilitare/disabilitare un ESP32 alla registrazione audio,
+	-mandare in sleep_mode (o risvegliare) un ESP32 quando desiderato,
+	-richiedere informazioni agli ESP32 quando desiderato,
+	-disconnettere dal broker MQTT un ESP32 (cioè cancellarlo dalla rete di sensori),
+	-resettare un dispositivo ESP32 quando desiderato o quando ci sono problemi,
+	-impostare la frequenza di registrazione degli audio (intervallo tra due registrazioni consecutive).
+
+Inizialmente tale rete viene scritta e testata in python, così da poter ovviare al problema della simulazione per molti ESP32 (infatti uno script
+in python potrà simulare un ESP32, così da poter avviare più script assieme e poter simulare e debuggare correttamente la rete prima della scrittura
+finale del codice per ESP32 stesso).
+
+-Quindi in generale per ora sono in fase di conclusione i codici python per la simulazione degli ESP32 (vedi ESP32_client_MQTT_simulator.py) 
+e del server che verrà effettivamente utilizzato su RaspberryPy (vedi AudioPreprocessing_Server.py).
